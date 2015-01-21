@@ -1,12 +1,16 @@
-# README
+---
+title: "README"
+output: 
+  html_document:
+    keep_md: true
+---
 
 ## 1- Merging test and train data set
 
 * Read the data from test, train and merge them into a variable called merge_x
 * The files do not have header so header is FALSE
 
-
-```r
+```{r results='hide', cache=TRUE}
 test_x <- read.table("UCI HAR Dataset/test/X_test.txt", header=FALSE, 
                    as.is = TRUE)
 train_x <- read.table("UCI HAR Dataset/train/X_train.txt", header=FALSE,
@@ -19,8 +23,7 @@ merge_x <- rbind(test_x, train_x)
 
 * Read the feature names from features.txt and assign as column names
 
-
-```r
+```{r results="hide", cache=TRUE}
 column_names <- read.table("UCI HAR Dataset/features.txt", 
                            header = FALSE, as.is = TRUE, 
                            colClasses = c("NULL", "character"), 
@@ -33,8 +36,7 @@ colnames(merge_x) <- column_names
 
 * Filter  only the columns whose names match mean or std 
 
-
-```r
+```{r results="hide", cache=TRUE}
 merge_x <- merge_x[,grep('mean|std', names(merge_x), ignore.case = TRUE)]
 ```
 
@@ -42,8 +44,7 @@ merge_x <- merge_x[,grep('mean|std', names(merge_x), ignore.case = TRUE)]
 
 * Read activity_id from test, train and merge them
 
-
-```r
+```{r results="hide", cache=TRUE}
 test_y <- read.table("UCI HAR Dataset/test/y_test.txt", header=FALSE,
                      as.is = TRUE, colClasses = c(rep("character",1)),
                      col.names=c("activity_id"))
@@ -57,8 +58,7 @@ merge_y <- rbind(test_y, train_y)
 * Extract the actual activity_labels then map it to the activity id data.
 * Finally add a column to the original data as activity_name
 
-
-```r
+```{r results="hide", cache=TRUE}
 activity_labs <- read.table("UCI HAR Dataset/activity_labels.txt", header=FALSE,
                             as.is=TRUE, colClasses=c(rep("character",2)), 
                             col.names=c("activity_id", "activity_name"))
@@ -73,8 +73,7 @@ merge_x$activity_name <- merge_y
 * Read the subject data from test,train and then merge them.
 * Add an additional column to the original dataset
 
-
-```r
+```{r results="hide", cache=TRUE}
 test_sub <- read.table("UCI HAR Dataset/test/subject_test.txt", header=FALSE,
                      as.is = TRUE, colClasses = c(rep("character",1)),
                      col.names=c("subject"))
@@ -90,8 +89,9 @@ merge_x <- cbind(merge_x, merge_sub)
 * calculate mean of all columns using lapply
 * write output to a result.txt
 
+```{r results="hide", cache=TRUE}
 
-```r
+
 library(data.table)
 DT <- data.table(merge_x)
 df <- DT[, lapply(.SD,mean), by=c("subject", "activity_name")]
