@@ -96,5 +96,5 @@ library(data.table)
 DT <- data.table(merge_x)
 df <- DT[, lapply(.SD,mean), by=c("subject", "activity_name")]
 
-write.table(df, file = "result.txt", row.names=FALSE)
+write.table(df, file = "result.txt", row.names=FALSE, col.names = FALSE)
 ```

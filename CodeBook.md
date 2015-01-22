@@ -1,9 +1,4 @@
----
-title: "CodeBook"
-output: 
-  html_document:
-    keep_md: true
----
+# CodeBook
 
 1 subject
 2 activity_name
