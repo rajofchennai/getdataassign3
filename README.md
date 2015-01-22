@@ -35,7 +35,7 @@ colnames(merge_x) <- column_names
 
 
 ```r
-merge_x <- merge_x[,grep('mean|std', names(merge_x), ignore.case = TRUE)]
+merge_x <- merge_x[,grep("-mean\\(\\)|-std\\(\\)", names(merge_x), ignore.case = TRUE)]
 ```
 
 ## 3 - Uses descriptive activity names to name the activities in the data set
@@ -96,5 +96,5 @@ library(data.table)
 DT <- data.table(merge_x)
 df <- DT[, lapply(.SD,mean), by=c("subject", "activity_name")]
 
-write.table(df, file = "result.txt", row.names=FALSE)
+write.table(df, file = "result.txt", row.names=FALSE, col.names = FALSE)
 ```

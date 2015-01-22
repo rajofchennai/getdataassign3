@@ -16,7 +16,7 @@ column_names <- read.table("UCI HAR Dataset/features.txt",
 
 colnames(merge_x) <- column_names
 
-merge_x <- merge_x[,grep('mean|std', names(merge_x), ignore.case = TRUE)]
+merge_x <- merge_x[,grep("-mean\\(\\)|-std\\(\\)", names(merge_x), ignore.case = TRUE)]
 
 test_y <- read.table("UCI HAR Dataset/test/y_test.txt", header=FALSE,
                      as.is = TRUE, colClasses = c(rep("character",1)),
