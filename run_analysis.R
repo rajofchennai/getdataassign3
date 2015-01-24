@@ -27,13 +27,13 @@ train_y <- read.table("UCI HAR Dataset/train/y_train.txt", header=FALSE,
 
 merge_y <- rbind(test_y, train_y)
 
+merge_x <- cbind(merge_x, merge_y)
+
 activity_labs <- read.table("UCI HAR Dataset/activity_labels.txt", header=FALSE,
                             as.is=TRUE, colClasses=c(rep("character",2)), 
                             col.names=c("activity_id", "activity_name"))
 
-merge_y <- merge(merge_y, activity_labs)$activity_name
-
-merge_x$activity_name <- merge_y
+#merge_x <- merge(merge_x, activity_labs, by = "activity_id")
  
 test_sub <- read.table("UCI HAR Dataset/test/subject_test.txt", header=FALSE,
                      as.is = TRUE, colClasses = c(rep("character",1)),
@@ -46,10 +46,13 @@ merge_sub <- rbind(test_sub, train_sub)
 
 merge_x <- cbind(merge_x, merge_sub)
 
+#merge_x$activity_id <- NULL
+
 library(data.table)
 DT <- data.table(merge_x)
-df <- DT[, lapply(.SD,mean), by=c("subject", "activity_name")]
+df <- DT[, lapply(.SD,mean), by=c("subject", "activity_id")]
+
+df <-  merge(df, activity_labs, by="activity_id")
+df$activity_id <- NULL
 
 write.table(df, file = "result.txt", row.names=FALSE, col.names = FALSE)
-
-
