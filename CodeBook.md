@@ -38,6 +38,8 @@ and activity_name.
 The two additional columns are subject which is the person who took the test,
 activity_name the activity person for performing during the meausurement
 
+The first column is subject and last column is activity_name. Rest are the means and std in the above given same order.
+
 
 
 
